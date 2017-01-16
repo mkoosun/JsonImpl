@@ -77,11 +77,11 @@ static int kIgnoreProperties;
         
     } else if([object isKindOfClass:[NSData class]]) {
         
-        dict = [NSJSONSerialization JSONObjectWithData:object options:NSJSONReadingAllowFragments error:nil];
+        dict = [NSJSONSerialization JSONObjectWithData:(NSData*)object options:NSJSONReadingAllowFragments error:nil];
         
     } else if([dict isKindOfClass:[NSDictionary class]]) {
         
-        dict = object;
+        dict = (NSDictionary*)object;
         
     } else {
         return;

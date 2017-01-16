@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = 'JsonImpl'
   s.version          = '1.0.0'
-  s.summary          = 'A short description of JsonImpl.'
+  s.summary          = 'A simple json tool.'
 
   s.description      = <<-DESC
                        Convenient and Simple Data Modeling Framework for JSON - Very useful for network protocol，and support inheritance, nesting.
