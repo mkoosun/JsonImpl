@@ -19,7 +19,7 @@ pod "JsonImpl"
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-### convert json to model
+### Convert json to model
 
 ```
 @interface Human : NSObject
@@ -38,7 +38,7 @@ Man *man2 = [Man new];
 
 ```
 
-### convert model to json
+### Convert model to json
 
 ```
 Human *man = [Human new];
@@ -46,7 +46,7 @@ NSString *str = [man toJsonString];
 NSDictionary *dict = [man toJsonDictionary];
 
 ```
-### inheritance
+### Inheritance
 
 ```
 @interface Man : Human
@@ -55,7 +55,7 @@ NSDictionary *dict = [man toJsonDictionary];
 
 ```
 
-### property nesting
+### Property nesting
 
 ```
 @interface Man : Human
@@ -63,7 +63,7 @@ NSDictionary *dict = [man toJsonDictionary];
 @end
 ```
 
-### array nesting
+### Array nesting
 ```
 @interface Man : Human
 @property (nonatomic, strong) NSArray* childrens;
@@ -79,7 +79,7 @@ NSDictionary *dict = [man toJsonDictionary];
 }
 ```
 
-### ignore property
+### Ignore property
 
 1. if property name is end of '_ignore', the property will be ignored
 
@@ -115,4 +115,4 @@ wanglin.sun, mkoosun@gmail.com
 
 ## License
 
-itry is available under the MIT license. See the LICENSE file for more info.
+JsonImpl is available under the MIT license. See the LICENSE file for more info.
