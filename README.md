@@ -34,7 +34,7 @@ Human *man = [Human new];
 
 NSString *jsonStr = @"{\n  \"age\" : 30\n}";
 Man *man2 = [Man new];
-[man2 parseJsonString: jsonStr];
+[man2 parse: jsonStr];
 
 ```
 

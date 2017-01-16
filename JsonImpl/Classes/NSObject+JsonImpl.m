@@ -18,7 +18,7 @@ static int kIgnoreProperties;
 
 + (void) setArrayProperty:(NSString*) property withClass:(NSString*) className {
     
-    char *name = object_getClassName(self);
+    const char *name = object_getClassName(self);
     NSString *myClassName = [NSString stringWithCString:name encoding:NSUTF8StringEncoding];
     
     NSMutableDictionary *dictionary = objc_getAssociatedObject(myClassName, &kArrayProperties);
@@ -31,7 +31,7 @@ static int kIgnoreProperties;
 
 + (void) setIgnoreProperty:(NSString*) property {
     
-    char *name = object_getClassName(self);
+    const char *name = object_getClassName(self);
     NSString *myClassName = [NSString stringWithCString:name encoding:NSUTF8StringEncoding];
     
     NSMutableArray *ignoreArray = objc_getAssociatedObject(myClassName, &kIgnoreProperties);
@@ -62,7 +62,30 @@ static int kIgnoreProperties;
     return dict;
 }
 
-- (void) parse: (NSObject *) dict {
+- (void) parse: (NSObject *) object {
+    
+    if(object == nil) {
+        return;
+    }
+    
+    NSDictionary* dict = nil;
+    
+    if([object isKindOfClass:[NSString class]]) {
+        
+        NSData* jsonData = [(NSString*)object dataUsingEncoding:NSUTF8StringEncoding];
+        dict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:nil];
+        
+    } else if([object isKindOfClass:[NSData class]]) {
+        
+        dict = [NSJSONSerialization JSONObjectWithData:object options:NSJSONReadingAllowFragments error:nil];
+        
+    } else if([dict isKindOfClass:[NSDictionary class]]) {
+        
+        dict = object;
+        
+    } else {
+        return;
+    }
     
     Class cls = self.class;
     [self _parseJsonDict:dict inClass:cls];
@@ -82,14 +105,6 @@ static int kIgnoreProperties;
     NSString* jsonStr = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
     return jsonStr;
 }
-
-- (void) parseJsonString: (NSString *) json {
-    
-    NSData* jsonData = [json dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:nil];
-    [self parse:dict];
-}
-
 
 # pragma mark - private methods
 
@@ -253,7 +268,7 @@ static int kIgnoreProperties;
         return YES;
     }
     
-    char *name = object_getClassName(cls);
+    const char *name = object_getClassName(cls);
     NSString *myClassName = [NSString stringWithCString:name encoding:NSUTF8StringEncoding];
     NSMutableArray *ignoreArray = objc_getAssociatedObject(myClassName, &kIgnoreProperties);
     if(ignoreArray && [ignoreArray containsObject:propertyName]) {
@@ -280,7 +295,7 @@ static int kIgnoreProperties;
 
 + (NSString *) _getArrayProperty:(NSString*) property ofClass:(Class)cls {
     
-    char *name = object_getClassName(cls);
+    const char *name = object_getClassName(cls);
     NSString *myClassName = [NSString stringWithCString:name encoding:NSUTF8StringEncoding];
     
     NSMutableDictionary *dictionary = objc_getAssociatedObject(myClassName, &kArrayProperties);

@@ -19,10 +19,9 @@
 
 - (NSDictionary *) toJsonDictionary;
 
-- (void) parse: (NSDictionary *) dict;
+- (void) parse: (NSObject*) dict;
 
 - (NSString*) toJsonString;
 
-- (void) parseJsonString: (NSString *) json;
 
 @end

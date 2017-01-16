@@ -16,28 +16,28 @@
     // Override point for customization after application launch.
     NSDictionary *dict = @{
                            @"age":@30,
-//                           @"name":@"mkoo",
-//                           @"birthDay":@"1984",
-//                           @"likes":@[@"basketball", @"swim"],
-//                           @"wife":@{
-//                                   @"age":@30,
-//                                   @"name":@"yao",
-//                                   @"birthDay":@"1982",
-//                                   @"likes":@[@"movie"]
-//                                   },
-//                           @"childrens": @[
-//                                   @{
-//                                       @"age":@4,
-//                                       @"name":@"swy",
-//                                       @"birthDay":@"2012",
-//                                       @"likes":@[@"run"]
-//                                       }
-//                                   ],
-//                           @"friends":@[
-//                                   @{
-//                                       @"name":@"myfriend1",
-//                                       @"birthDay":@"1982",
-//                                       }],
+                           @"name":@"mkoo",
+                           @"birthDay":@"1984",
+                           @"likes":@[@"basketball", @"swim"],
+                           @"wife":@{
+                                   @"age":@30,
+                                   @"name":@"yao",
+                                   @"birthDay":@"1982",
+                                   @"likes":@[@"movie"]
+                                   },
+                           @"childrens": @[
+                                   @{
+                                       @"age":@4,
+                                       @"name":@"swy",
+                                       @"birthDay":@"2012",
+                                       @"likes":@[@"run"]
+                                       }
+                                   ],
+                           @"friends":@[
+                                   @{
+                                       @"name":@"myfriend1",
+                                       @"birthDay":@"1982",
+                                       }],
                            };
     
     Man *man = [Man new];
@@ -52,7 +52,7 @@
     NSLog(@"%@", str);
     
     Man *man2 = [Man new];
-    [man2 parseJsonString:str];
+    [man2 parse:str];
     
     NSString *str2 = [man2 toJsonString];
     
