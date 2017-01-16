@@ -1,0 +1,16 @@
+PODS:
+  - JsonImpl (0.1.0)
+
+DEPENDENCIES:
+  - JsonImpl (from `../`)
+
+EXTERNAL SOURCES:
+  JsonImpl:
+    :path: ../
+
+SPEC CHECKSUMS:
+  JsonImpl: 0ba19fcba65dd20e5e6143d6da6d092e884c1b41
+
+PODFILE CHECKSUM: eb3e58e34393787baa1ad77a8a7cf27b17963355
+
+COCOAPODS: 1.1.1

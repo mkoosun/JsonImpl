@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'JsonImpl_Example' do
+  pod 'JsonImpl', :path => '../'
+
+  target 'JsonImpl_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end

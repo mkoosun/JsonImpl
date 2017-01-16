@@ -1,0 +1,22 @@
+{
+  "name": "JsonImpl",
+  "version": "0.1.0",
+  "summary": "A short description of JsonImpl.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/<GITHUB_USERNAME>/JsonImpl",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "wanglin.sun": "mkoosun@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/<GITHUB_USERNAME>/JsonImpl.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "JsonImpl/Classes/**/*"
+}
