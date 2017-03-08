@@ -18,26 +18,28 @@ static int kIgnoreProperties;
 
 + (void) setArrayProperty:(NSString*) property withClass:(NSString*) className {
     
-    const char *name = object_getClassName(self);
-    NSString *myClassName = [NSString stringWithCString:name encoding:NSUTF8StringEncoding];
+    //const char *name = object_getClassName(self);
+    //NSString *myClassName = [NSString stringWithCString:name encoding:NSUTF8StringEncoding];
+    Class cls = self;
     
-    NSMutableDictionary *dictionary = objc_getAssociatedObject(myClassName, &kArrayProperties);
+    NSMutableDictionary *dictionary = objc_getAssociatedObject(cls, &kArrayProperties);
     if(dictionary == nil) {
         dictionary = [NSMutableDictionary new];
-        objc_setAssociatedObject(myClassName, &kArrayProperties, dictionary, OBJC_ASSOCIATION_RETAIN);
+        objc_setAssociatedObject(self, &kArrayProperties, dictionary, OBJC_ASSOCIATION_RETAIN);
     }
     [dictionary setObject:className forKey:property];
 }
 
 + (void) setIgnoreProperty:(NSString*) property {
     
-    const char *name = object_getClassName(self);
-    NSString *myClassName = [NSString stringWithCString:name encoding:NSUTF8StringEncoding];
+    //const char *name = object_getClassName(self);
+    //NSString *myClassName = [NSString stringWithCString:name encoding:NSUTF8StringEncoding];
+    Class cls = self;
     
-    NSMutableArray *ignoreArray = objc_getAssociatedObject(myClassName, &kIgnoreProperties);
+    NSMutableArray *ignoreArray = objc_getAssociatedObject(cls, &kIgnoreProperties);
     if(ignoreArray == nil) {
         ignoreArray = [NSMutableArray new];
-        objc_setAssociatedObject(myClassName, &kIgnoreProperties, ignoreArray, OBJC_ASSOCIATION_RETAIN);
+        objc_setAssociatedObject(cls, &kIgnoreProperties, ignoreArray, OBJC_ASSOCIATION_RETAIN);
     }
     
     if(![ignoreArray containsObject:property]) {
@@ -274,9 +276,10 @@ static int kIgnoreProperties;
         return YES;
     }
     
-    const char *name = object_getClassName(cls);
-    NSString *myClassName = [NSString stringWithCString:name encoding:NSUTF8StringEncoding];
-    NSMutableArray *ignoreArray = objc_getAssociatedObject(myClassName, &kIgnoreProperties);
+    //const char *name = object_getClassName(cls);
+    //NSString *myClassName = [NSString stringWithCString:name encoding:NSUTF8StringEncoding];
+    
+    NSMutableArray *ignoreArray = objc_getAssociatedObject(cls, &kIgnoreProperties);
     if(ignoreArray && [ignoreArray containsObject:propertyName]) {
         return YES;
     }
@@ -287,7 +290,7 @@ static int kIgnoreProperties;
     objc_property_t property = class_getProperty(cls, propertyNameChar);
     
     if(property) {
-    
+        
         const char * attributes_char = property_getAttributes(property);
         NSString *propertyType = [NSString stringWithUTF8String:attributes_char];
         
@@ -301,10 +304,10 @@ static int kIgnoreProperties;
 
 + (NSString *) _getArrayProperty:(NSString*) property ofClass:(Class)cls {
     
-    const char *name = object_getClassName(cls);
-    NSString *myClassName = [NSString stringWithCString:name encoding:NSUTF8StringEncoding];
+    //const char *name = object_getClassName(cls);
+    //NSString *myClassName = [NSString stringWithCString:name encoding:NSUTF8StringEncoding];
     
-    NSMutableDictionary *dictionary = objc_getAssociatedObject(myClassName, &kArrayProperties);
+    NSMutableDictionary *dictionary = objc_getAssociatedObject(cls, &kArrayProperties);
     if(dictionary) {
         NSString *value = [dictionary objectForKey:property];
         return value;
