@@ -84,7 +84,7 @@ static int kIgnoreProperties;
             return;
         }
         
-    } else if([dict isKindOfClass:[NSDictionary class]]) {
+    } else if([object isKindOfClass:[NSDictionary class]]) {
         
         dict = (NSDictionary*)object;
     }
