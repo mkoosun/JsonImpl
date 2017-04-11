@@ -130,6 +130,10 @@ static int kIgnoreProperties;
         const char* char_f =property_getName(property);
         
         NSString *propertyName = [NSString stringWithUTF8String:char_f];
+        NSString *jsonPropertyName = propertyName;
+        if([propertyName isEqualToString:@"id_"]) {
+            jsonPropertyName = @"id";
+        }
         
         if([NSObject _isIgnoreProperty:propertyName ofClass:cls]) {
             continue;
@@ -143,12 +147,12 @@ static int kIgnoreProperties;
                 continue;
             }
             
-            [dict setObject:propertyValue forKey:propertyName];
+            [dict setObject:propertyValue forKey:jsonPropertyName];
             continue;
         }
         
         if([propertyValue isKindOfClass:[NSString class]] || [propertyValue isKindOfClass:[NSDictionary class]]) {
-            [dict setObject:propertyValue forKey:propertyName];
+            [dict setObject:propertyValue forKey:jsonPropertyName];
             continue;
         }
         
@@ -158,7 +162,7 @@ static int kIgnoreProperties;
             
             for(NSObject *arrayItem in propertyValue) {
                 if( [arrayItem isKindOfClass:[NSNumber class]] || [arrayItem isKindOfClass:[NSString class]] || [arrayItem isKindOfClass:[NSDictionary class]] ) {
-                    [dict setObject:propertyValue forKey:propertyName];
+                    [dict setObject:propertyValue forKey:jsonPropertyName];
                     break;
                 } else {
                     if(subArray == nil) {
@@ -169,7 +173,7 @@ static int kIgnoreProperties;
             }
             
             if(subArray) {
-                [dict setObject:subArray forKey:propertyName];
+                [dict setObject:subArray forKey:jsonPropertyName];
                 continue;
             }
             
@@ -179,7 +183,7 @@ static int kIgnoreProperties;
         if(propertyValue!=nil) {
             NSDictionary *value = [propertyValue toJsonDictionary];
             if(value.count>0) {
-                [dict setObject:[propertyValue toJsonDictionary] forKey:propertyName];
+                [dict setObject:[propertyValue toJsonDictionary] forKey:jsonPropertyName];
             }
         }
     }
@@ -203,6 +207,11 @@ static int kIgnoreProperties;
         
         NSString *propertyName = [NSString stringWithUTF8String:name_char];
         
+        NSString *objcPropertyName = propertyName;
+        if([propertyName isEqualToString:@"id"]) {
+            objcPropertyName = @"id_";
+        }
+        
         NSString *propertyType = [NSString stringWithUTF8String:attributes_char];
         
         id propertyValue = [dict objectForKey:propertyName];
@@ -211,11 +220,11 @@ static int kIgnoreProperties;
             
             if([propertyValue isKindOfClass:[NSNumber class]]) {
                 
-                [self setValue:propertyValue forKey:propertyName];
+                [self setValue:propertyValue forKey:objcPropertyName];
                 
             } else if([propertyValue isKindOfClass:[NSArray class]] ) {
                 
-                NSString *className = [NSObject _getArrayProperty:propertyName ofClass:(Class)cls];
+                NSString *className = [NSObject _getArrayProperty:objcPropertyName ofClass:(Class)cls];
                 if(className) {
                     Class cls = NSClassFromString(className);
                     NSMutableArray *subArray = [NSMutableArray new];
@@ -228,10 +237,10 @@ static int kIgnoreProperties;
                             [subArray addObject:item];
                         }
                     }
-                    [self setValue:subArray forKey:propertyName];
+                    [self setValue:subArray forKey:objcPropertyName];
                     
                 } else {
-                    [self setValue:propertyValue forKey:propertyName];
+                    [self setValue:propertyValue forKey:objcPropertyName];
                 }
                 
             } else if([propertyValue isKindOfClass:[NSDictionary class]]) {
@@ -244,22 +253,22 @@ static int kIgnoreProperties;
                         NSString *className = array[1];
                         
                         if([className isEqualToString:@"NSDictionary"] || [className isEqualToString:@"NSMutableDictionary"]) {
-                            [self setValue:propertyValue forKey:propertyName];
+                            [self setValue:propertyValue forKey:objcPropertyName];
                             continue;
                         } else {
                             Class cls = NSClassFromString(className);
                             NSObject *obj = [cls new];
                             [obj parse:propertyValue];
-                            [self setValue:obj forKey:propertyName];
+                            [self setValue:obj forKey:objcPropertyName];
                         }
                     }
                 } else {
-                    [self setValue:propertyValue forKey:propertyName];
+                    [self setValue:propertyValue forKey:objcPropertyName];
                 }
                 
             } else {
                 
-                [self setValue:propertyValue forKey:propertyName];
+                [self setValue:propertyValue forKey:objcPropertyName];
             }
             
         } else {
