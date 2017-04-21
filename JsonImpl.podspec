@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'JsonImpl'
-  s.version          = '1.0.2'
+  s.version          = '1.0.4'
   s.summary          = 'A simple json tool.'
 
   s.description      = <<-DESC
